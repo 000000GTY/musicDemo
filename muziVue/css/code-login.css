@@ -1,0 +1,47 @@
+body{
+    background-color: #da2c22;
+}
+
+.form input {
+    color: black;
+    width: 300px;
+    height: 34.9988px;
+    border-radius: 18px;
+    border: 1.0012px;
+    margin-bottom: 6px;
+    background-color: #e0a39f97;
+    /* 取消点击高亮 */
+    outline: none;
+    /* 设置内边距，字体与开头的距离 */
+    padding-left: 30px;
+}
+.form {
+    margin-top: 250px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+button {
+    margin-top: 4.9988px;
+    width: 289.9987px;
+    height: 34.9988px;
+    border-radius: 25.0012px;
+    font-size: 18px;
+    color: white;
+
+    background-color: #da2c22;
+    border: 1.9988px solid rgba(255, 255, 255, 0.526);
+}
+.yanzhengma{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.yanzhengma>.right{
+    /* margin-top: 5px; */
+    position: absolute;
+    color: #110f0f;
+    right: 10px;
+    font-size: 13px;
+    font-weight: 900;
+}

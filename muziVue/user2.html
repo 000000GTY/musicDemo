@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="./css/user2.css">
+    </link>
+
+    <script>
+        document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+    </script>
+    <script>
+        // 获取uid
+        var uid = localStorage.getItem("uid");
+        console.log(uid)
+        // 登录条件判断 
+        // null 在if判断中为false
+        // !取反   !false = true
+        if (!uid) {
+            location.href = "./from.html";
+        }
+    </script>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="one">
+            <img alt="" :src="user.avatar" class="avatar">
+            <div class="middle">
+                <span class="up uname">{{ user.uname }}</span>
+                <div class="down">
+                    <div>VIP</div>
+                    <div>Lv.0</div>
+                </div>
+            </div>
+            <div class="right">
+                <div>开通黑胶VIP</div>
+                <i class="fa fa-mail-forward"></i>
+            </div>
+        </div>
+
+        <div class="two">
+            <div>
+                <i class="fa fa-cloud-download"></i>
+                <div>本地音乐</div>
+            </div>
+            <div>
+                <i class="fa fa-music"></i>
+                <div>我的电台</div>
+            </div>
+            <div>
+                <i class="fa fa-star-o"></i>
+                <div>我的收藏</div>
+            </div>
+            <div>
+                <i class="fa fa-gratipay"></i>
+                <div>关注新歌</div>
+            </div>
+        </div>
+
+        <div class="three">
+            <div class="title">
+                <div>我的音乐</div>
+            </div>
+            <div class="content">
+                <span @click="goCollect()">
+                    <i class="fa fa-heart"></i>
+                    <div>我喜欢的音乐</div>
+                    <div><i class="fa fa-play"></i> 心动模式</div>
+                </span>
+            </div>
+            <div class="title">
+                <div>推荐歌单</div>
+                <div>更多>></div>
+            </div>
+            <div class="zuiJin">
+                <span v-for="(sheet,i) of sheets">
+                    <div @click="goToSheet(sheet.sid)">
+                        <img alt="" :src="sheet.pic">
+                        <span></span>
+                        <i class="fa fa-heart"></i>
+                    </div>
+                    <span>{{sheet.intro}}</span>
+                </span>
+            </div>
+        </div>
+        <div class="tab-bar">
+            <div class="tab-bar-item" @click="goToFind()">
+                <i class="fa fa-meetup"></i>
+                <span>发现</span>
+            </div>
+            <div class="tab-bar-item">
+                <i class="fa fa-credit-card"></i>
+                <span>视频</span>
+            </div>
+            <div class="tab-bar-item active">
+                <i class="fa fa-paper-plane-o"></i>
+                <span>我的</span>
+            </div>
+            <div class="tab-bar-item" @click="goToOrder()">
+                <i class="fa fa-id-card-o"></i>
+                <span>排行榜</span>
+            </div>
+            <div class="tab-bar-item" @click="goToUser()">
+                <i class="fa fa-user-o"></i>
+                <span>账号</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                user: { phone: 'GTY', avatar: './img/user/104.jpg' },
+                sheets: []
+            },
+            methods: {
+                goToUser: function () {
+                    location.href = "./user.html"
+                },
+                goToFind: function () {
+                    location.href = "./find.html"
+                },
+                goToOrder: function () {
+                    location.href = './order.html'
+                },
+                goCollect: function () {
+                    location.href = './collect.html'
+                },
+                goToSheet:function(sid){
+                    location.href = './sheet.html?sid='+sid
+                }
+
+
+
+            },
+            mounted() {
+                fetch('http://196.168.143.181:3000/user/info?uid=' + uid)
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res)
+                        this.user = res.data
+                    }),
+                fetch('http://196.168.143.181:3000/sheet/list').then(res => res.json()).then(res => {
+                        this.sheets = res.data.slice(0, 9);
+                        console.log(this.sheets);
+                    })
+            },
+
+        })
+
+
+        // var users = [
+        //     {
+        //         "uid": 1,
+        //         "phone": "123",
+        //         "upwd": "123",
+        //         "avatar": "img/img/user/101.jpg"
+        //     },
+        //     {
+        //         "uid": 2,
+        //         "phone": "13501234568",
+        //         "upwd": "123456",
+        //         "avatar": "img/img/user/102.jpg"
+        //     },
+        //     {
+        //         "uid": 3,
+        //         "phone": "13501234569",
+        //         "upwd": "123456",
+        //         "avatar": "img/img/user/103.jpg"
+        //     },
+        //     {
+        //         "uid": 4,
+        //         "phone": "13501234560",
+        //         "upwd": "123456",
+        //         "avatar": "img/img/user/104.jpg"
+        //     }
+        // ]
+        // var goToUser = function () {
+        //     location.href = "./user.html"
+        // }
+        // var goToFind = function () {
+        //     location.href = "./find.html"
+        // }
+        // var imgEl = document.querySelector('.avatar')
+        // var uname = document.querySelector('.uname')
+        // for (var user of users) {
+        //     if (user.uid == uid) {
+        //         imgEl.src = user.avatar
+        //         uname.textContent = user.phone
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

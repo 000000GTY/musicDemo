@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="./css/user-update.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  </link>
+
+  <script>
+    document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+  </script>
+  <!-- 引入vue文件 -->
+  <script src="./js/vue.js"></script>
+  <title></title>
+</head>
+
+<body>
+  <div id="app">
+
+
+    <div class="form">
+      <h2>用户修改</h2>
+      <input type="text" id="phone" v-model="phone" disabled></input>
+      <input type="text" class="uname" id="uname" v-model="uname" placeholder="请输入昵称">
+      <input type="text" class="signature" v-model="signature" placeholder="请输入描述"></input>
+      <button id="button01" class="update" @click="update()">修改</button>
+      <div @click="goBack()">取消修改</div>
+    </div>
+    <!-- nickname:   <input type="text" v-model="uname"> <br> -->
+    <!-- disabled 禁用 -->
+    <!-- phone: <input type="text" v-model="phone" disabled> <br>
+    signature: <input type="text" v-model="signature"> <br>
+    <button @click="update">修改</button> -->
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        uname: '',
+        phone: '',
+        signature: '',
+        upwd: ''
+      },
+      methods: {
+        update() {
+          var uid = localStorage.getItem('uid')
+          var obj = { uid: uid, uname: this.uname, signature: this.signature }
+          // 发请求修改用户信息
+          fetch('http://196.168.143.181:3000/user/update', {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: { 'Content-Type': 'application/json' }
+          }).then(res => res.json()).then(res => {
+            console.log(res)
+          })
+        },
+        goBack() {
+          history.back()
+        }
+      },
+      mounted() {
+        // 修改用户信息之前需要先查询一次用户信息,并展示到页面上
+        var uid = localStorage.getItem('uid')
+        fetch('http://196.168.143.181:3000/user/info?uid=' + uid).then(res => res.json()).then(res => {
+          console.log(res)
+          this.uname = res.data.uname
+          this.phone = res.data.phone
+          this.signature = res.data.signature
+        })
+      },
+    })
+  </script>
+</body>
+
+</html>

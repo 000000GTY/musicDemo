@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="./css/find.css">
+    <style>
+
+    </style>
+    <script>
+        document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+    </script>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body class="body">
+    <div id="app">
+        <div class="search">
+            <i class="fa fa-microphone"></i>
+            <input type="text" placeholder="" id="searchStr" v-model="searchStr">
+            <img src="./img/search.png" alt="" @click="goToSearch()">
+        </div>
+        <div class="banner">
+            <img id="bannerImg" :src="imgs[imgsIndex].src" alt="">
+            <div class="pointer">
+                <span v-for="(item,i) of imgs" :class="{active : i == imgsIndex}"></span>
+            </div>
+        </div>
+        <div class="mid-bar">
+            <div class="item">
+                <i class="fa fa-calendar"></i>
+                <span>每日推荐</span>
+            </div>
+            <div class="item">
+                <i class="fa fa-music"></i>
+                <span>歌单</span>
+            </div>
+            <div class="item">
+                <i class="fa fa-list-alt"></i>
+                <span>排行版</span>
+            </div>
+            <div class="item">
+                <i class="fa fa-wifi"></i>
+                <span>电台</span>
+            </div>
+            <div class="item">
+                <i class="fa fa-tv"></i>
+                <span>直播</span>
+            </div>
+            <div class="item">
+                <i class="fa fa-fire"></i>
+                <span>火钳刘明</span>
+            </div>
+            <div class="item">
+                <i class="fa fa-comments-o"></i>
+                <span>畅聊</span>
+            </div>
+        </div>
+
+        <div class="choice">
+            <div class="choice-title">
+                <span class="left">你的精选歌单站</span>
+                <span class="right" @click="goToSheetSquare()">查看更多</span>
+            </div>
+            <div class="choice-box">
+                <div class="item" v-for="sheet of sheets">
+                    <img :src="sheet.pic" alt="" @click="goToSheet(sheet.sid)">
+                    <span>{{ sheet.comment }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="story">
+            <div class="story-title">
+                <span class="left">他们把故事唱成歌</span>
+                <span class="right"><i class="fa fa-play"></i>播放全部</span>
+            </div>
+
+            <div class="story-box">
+                <div class="item" v-for="song of songs">
+                    <img class="cover" :src="song.cover" alt="">
+                    <div class="info">
+                        <div class="title">
+                            <span>{{ song.title }}</span>
+                            <span>-{{ song.singer }}</span>
+                        </div>
+                        <div class="ps">
+                            <span>SQ</span>
+                            <span>{{ song.title }}</span>
+                        </div>
+                    </div>
+                    <img class="play" src="./img/_play.png" @click="goToSong(song.sid)" alt="">
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tab-bar">
+            <div class="tab-bar-item active">
+                <i class="fa fa-meetup"></i>
+                <span>发现</span>
+            </div>
+            <div class="tab-bar-item">
+                <i class="fa fa-credit-card"></i>
+                <span>视频</span>
+            </div>
+            <div class="tab-bar-item" @click="goToUser2()">
+                <i class="fa fa-paper-plane-o"></i>
+                <span>我的</span>
+            </div>
+            <div class="tab-bar-item" @click="goToOrder()">
+                <i class="fa fa-id-card-o"></i>
+                <span>排行榜</span>
+            </div>
+            <div class="tab-bar-item" @click="goToUser()">
+                <i class="fa fa-user-o"></i>
+                <span>账号</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                // 给一个空的初始值,防止页面渲染时报错
+				// 	因为当页面读取src属性时,请求还没有响应
+                imgs: [{ src: '' }],
+				imgsIndex: 0,
+				sheets: [],
+				songs: [],
+				searchStr: '',
+            },
+            mounted() {
+				// 由于网络请求响应时间不确定,所以所有响应需要执行的操作
+				// 	都写在获取到响应结果的函数内部
+				fetch('http://196.168.143.181:3000/index/carousel')
+					.then(res => res.json()).then(res => {
+						this.imgs = res.data
+						setInterval(() => {
+							this.imgsIndex++
+							if (this.imgsIndex == this.imgs.length) {
+								this.imgsIndex = 0
+							}
+						}, 1500);
+					})
+				fetch('http://196.168.143.181:3000/sheet/list')
+					.then(res => res.json()).then(res => {
+						this.sheets = res.data
+					})
+
+				fetch('http://196.168.143.181:3000/song/list')
+					.then(res => res.json()).then(res => {
+						this.songs = res.data
+					})
+			},
+            methods: {
+                goToSong: function (sid) {
+                    location.href = './song-info.html?sid=' + sid
+                },
+                goToSheet: function (sid) {
+                    window.location.href = './sheet.html?sid=' + sid
+                },
+                goToUser: function () {
+                    location.href = './user.html'
+                },
+                goToUser2: function () {
+                    location.href = './user2.html'
+                },
+                goToSearch: function () {
+                    location.href = './search.html?searchStr=' + this.searchStr
+                },
+                goToSheetSquare(){
+                    location.href = './sheet-square.html'
+                },
+                goToOrder(){
+                    location.href = './order.html'
+                }
+            }
+        })
+    </script>
+
+
+    <!-- <script>
+        var imgsSrc = [
+            './img/ad/853.jpg',
+            './img/ad/902.jpg',
+            './img/ad/903.jpg',
+            './img/ad/917.jpg',
+            './img/ad/811.jpg',
+            './img/ad/918.jpg'
+        ]
+
+        var imgEl = document.getElementById('bannerImg')
+        var i = 0
+        var pointer = document.getElementsByClassName('pointer')
+        var sp = pointer[0].children
+
+        // 初始化
+        sp[0].classList.add('active')
+        imgEl.src = imgsSrc[imgsSrc.length - 1]
+
+        setInterval(function () {
+            imgEl.src = imgsSrc[i]
+            sp[i].classList.remove('active')
+            i++
+            if (i == imgsSrc.length) {
+                i = 0
+            }
+            sp[i].classList.add('active')
+        }, 3000);
+
+        // 歌单
+        var sheets = [
+            {
+                "sid": 10,
+                "title": "国风伤感",
+                "user_id": 4,
+                "pic": "img/sheet/10.jpg",
+                "comment": "如今的念头，是去很远的地方，饮马曳落河，拄剑拖月山"
+            },
+            {
+                "sid": 20,
+                "title": "治愈系指南",
+                "user_id": 4,
+                "pic": "img/sheet/20.jpg",
+                "comment": "微风吹来丝丝秋意,月亮照出梦的甜蜜,亲爱的朋友"
+            },
+            {
+                "sid": 30,
+                "title": "抖音BGM签收",
+                "user_id": 1,
+                "pic": "img/sheet/30.jpg",
+                "comment": "善待自己，从心开始。眼里的世界，从来只是表象"
+            },
+            {
+                "sid": 40,
+                "title": "发光自习室",
+                "user_id": 1,
+                "pic": "img/sheet/40.jpg",
+                "comment": "每到学习时间，所有的压力都接踵而至。此张歌单送给正在努力学习的你"
+            },
+            {
+                "sid": 50,
+                "title": "古风纯音",
+                "user_id": 2,
+                "pic": "img/sheet/50.jpg",
+                "comment": "情愫始自少年时，簪缨结发两相知。年年灼灼艳桃李，结发簪花配君子"
+            }
+        ]
+
+        // 1. 获取父元素
+        var choiceEl = document.querySelector('.choice-box')
+
+        for (var sheet of sheets) {
+            console.log(sheet.pic)
+            // 2. 生成每一个歌单元素
+            var divel = document.createElement('div')
+            // `` 反引号 是模板字符串
+            // 模板字符串中可以使用 ${} 来引用变量
+            // 3. 设置歌单元素的内容
+            divel.innerHTML = `
+				<div class="item">
+					<img src="${sheet.pic}" alt="" onclick="goToSheet(${sheet.sid})">
+					<span>${sheet.comment}</span>
+				</div>
+			`
+            // appendChild 添加一个子元素
+            // 4. 把歌单元素添加到父元素中
+            choiceEl.appendChild(divel)
+        }
+
+        //歌曲列表
+        // 歌曲列表
+        let songs = [
+            {
+                "sid": 1,
+                "title": "TBD",
+                "singer": "David",
+                "cover": "img/song/615.jpg",
+                "url": "audio/615.mp3"
+            },
+            {
+                "sid": 2,
+                "title": "出头天",
+                "singer": "五月天",
+                "cover": "img/song/618.jpg",
+                "url": "audio/618.mp3"
+            },
+            {
+                "sid": 3,
+                "title": "刚刚好",
+                "singer": "薛之谦",
+                "cover": "img/song/781.jpg",
+                "url": "audio/781.mp3"
+            },
+            {
+                "sid": 4,
+                "title": "你不是真正的快乐",
+                "singer": "邓紫棋",
+                "cover": "img/song/796.jpg",
+                "url": "audio/796.mp3"
+            },
+            {
+                "sid": 5,
+                "title": "绅士",
+                "singer": "薛之谦",
+                "cover": "img/song/801.jpg",
+                "url": "audio/801.mp3"
+            },
+            {
+                "sid": 6,
+                "title": "天外来物",
+                "singer": "薛之谦",
+                "cover": "img/song/805.jpg",
+                "url": "audio/805.mp3"
+            },
+            {
+                "sid": 7,
+                "title": "突然好想你",
+                "singer": "五月天",
+                "cover": "img/song/809.jpg",
+                "url": "audio/809.mp3"
+            },
+            {
+                "sid": 8,
+                "title": "我不愿让你一个人",
+                "singer": "五月天",
+                "cover": "img/song/813.jpg",
+                "url": "audio/813.mp3"
+            },
+            {
+                "sid": 9,
+                "title": "我心中的尚未崩坏的地方",
+                "singer": "五月天",
+                "cover": "img/song/821.jpg",
+                "url": "audio/821.mp3"
+            },
+            {
+                "sid": 10,
+                "title": "想见你想见你想见你",
+                "singer": "八三夭",
+                "cover": "img/song/900.jpg",
+                "url": "audio/900.mp3"
+            },
+            {
+                "sid": 11,
+                "title": "像风一样",
+                "singer": "薛之谦",
+                "cover": "img/song/903.jpg",
+                "url": "audio/903.mp3"
+            },
+            {
+                "sid": 12,
+                "title": "这就是爱",
+                "singer": "张杰",
+                "cover": "img/song/905.jpg",
+                "url": "audio/905.mp3"
+            }
+        ]
+        // 1.获取父元素
+        let narrateEL = document.querySelector('.story-box')
+        for (var song of songs) {
+            // 2. 生成每一个歌曲元素
+            var divel = document.createElement('div')
+            // 3. 给歌曲元素添加类名
+            divel.className = 'item'
+            // 4. 设置歌曲元素的内容
+            divel.innerHTML = `
+				<img class="cover" src="${song.cover}" alt="">
+				<div class="info">
+					<div class="title">
+						<span>${song.title}</span>
+						<span>-${song.singer}</span>
+					</div>
+					<div class="ps">
+						<span>SQ</span>
+						<span>${song.title}</span>
+					</div>
+				</div>
+				<img class="play" src="./img/_play.png" onclick="goToSong(${song.sid})" alt="">
+			`
+            // 5. 把歌曲元素添加到父元素中
+            narrateEL.appendChild(divel)
+        }
+        var goToSong = function (sid) {
+            window.location.href = './song-info.html?sid=' + sid
+        }
+        var goToSheet = function (sid) {
+            window.location.href = './sheet.html?sid=' + sid
+        }
+
+        var searchStr = document.querySelector('#searchStr')
+        var goToSearch = function () {
+            // console.log(searchStr.value)
+            location.href = './search.html?searchStr=' + searchStr.value
+        }
+
+        var goToUser = function () {
+            location.href = './user.html'
+        }
+
+        var goToUser2 = function () {
+            location.href = './user2.html'
+        }
+    </script> -->
+</body>
+
+</html>

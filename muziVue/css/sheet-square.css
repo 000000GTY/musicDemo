@@ -1,0 +1,71 @@
+.swiper {
+    width: 100%;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 110px;
+    height: 160px;
+}
+
+.swiper-slide img {
+    width: 110px;
+    height: 130px;
+    border-radius: 10px;
+}
+
+.swiper-3d .swiper-slide-shadow-left {
+    height: 130px !important;
+    /* background: transparent !important; */
+}
+
+.swiper-3d .swiper-slide-shadow-right {
+    height: 130px !important;
+    /* background: transparent !important; */
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.top-nav>.fa {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.749);
+}
+
+.geDan {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.geDan img {
+    height: 90px;
+    width: 90px;
+    border-radius: 5px;
+}
+
+.geDan .item {
+    margin-left: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.geDan .item span {
+
+    font-size: 10px;
+    width: 90px;
+    height: 32px;
+
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}

@@ -1,0 +1,49 @@
+body{
+    background-color: #d39696a7;
+    font-size: 15px;
+}
+h2{
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: black;
+}
+.form input {
+    color: black;
+    width: 300px;
+    height: 34.9988px;
+    border-radius: 18px;
+    border: 1.0012px;
+    margin-bottom: 6px;
+    background-color: #f7ecec97;
+    /* 取消点击高亮 */
+    outline: none;
+    /* 设置内边距，字体与开头的距离 */
+    padding-left: 30px;
+}
+.form {
+    margin-top: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+button {
+    margin-top: 4.9988px;
+    width: 300px;
+    height: 35px;
+    border-radius: 25.0012px;
+    font-size: 18px;
+    color: white;
+
+    background-color: #883833;
+    border: 1.9988px solid rgba(255, 255, 255, 0.526);
+}
+.form div{
+    margin-top: 10px;
+    font-size: 15px;
+    color: rgba(224, 61, 61, 0.88);
+}
+.form #phone{
+    background-color: rgba(161, 155, 155, 0.574);
+}

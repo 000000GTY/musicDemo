@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/sheet.css">
+  <link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+  <script>
+    document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+  </script>
+  <script src="./js/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <i class="fa fa-chevron-left" id="back" @click="goBack()"></i>
+    <div class="info">
+            <div class="left">
+        <img :src="sheet.pic" alt="">
+        <span>歌单</span>
+      </div>
+      <div class="right">
+        <span class="title">
+          {{ sheet.title }}
+        </span>
+        <div>
+          <div class="middleRight">
+            <img src="./img/user/101.jpg" alt="">
+            <i class="fa fa-star"></i>
+          </div>
+          <span>GNC顾某宇</span>
+        </div>
+        <div class="author">{{ sheet.comment }}</div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="song-list">
+
+      <div class="song-item" v-for="(song,i) of songList">
+        <span>{{ i+1 }}</span>
+        <div class="item-text">
+          <span class="item-title">{{ song.title }}</span>
+          <span class="item-singer">{{ song.singer }}</span>
+        </div>
+        <img src="./img/_play.png" alt="" @click="goToSong(song.sid)">
+      </div>
+    </div>
+
+    <div class="tab-bar">
+      <div class="tab-bar-item" @click="goToFind()">
+        <i class="fa fa-meetup"></i>
+        <span>发现</span>
+      </div>
+      <div class="tab-bar-item">
+        <i class="fa fa-credit-card"></i>
+        <span>视频</span>
+      </div>
+      <div class="tab-bar-item" @click="goToUser2()">
+        <i class="fa fa-paper-plane-o"></i>
+        <span>我的</span>
+      </div>
+      <div class="tab-bar-item">
+        <i class="fa fa-id-card-o"></i>
+        <span>云村</span>
+      </div>
+      <div class="tab-bar-item" @click="gotoUser()">
+        <i class="fa fa-user-o"></i>
+        <span>账号</span>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        sheet: {},
+        songList: []
+      },
+      mounted() {
+        var url = location.search
+        url = url.slice(1)
+        var params = new URLSearchParams(url)
+        var sid = params.get('sid')
+
+        fetch('http://196.168.143.181:3000/sheet/details?sid=' + sid)
+          .then(res => res.json())
+          .then(res => {
+            console.log(res.data)
+            this.sheet = res.data.sheet
+            this.songList =res.data.songs
+          })
+      },
+      methods: {
+        gotoUser: function () {
+          location.href = './user.html'
+        },
+        goToUser2: function () {
+          location.href = './user2.html'
+        },
+        goToFind: function () {
+          location.href = './find.html'
+        },
+        goToSong: function (sid) {
+          window.location.href = './song-info.html?sid=' + sid
+        },
+        goBack:function(){
+          history.back()
+        }
+      },
+
+    })
+  </script>
+ 
+</body>
+
+</html>

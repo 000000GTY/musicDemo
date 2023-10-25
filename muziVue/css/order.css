@@ -1,0 +1,125 @@
+      
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 20px;
+  /* background-color: pink; */
+}
+
+.top-bar>i {
+  font-size: 16px
+}
+
+.top-bar>span {
+  font-size: 16px;
+}
+
+.top-bar>img {
+  width: 36px;
+  height: 26px;
+}
+
+.bangdan {
+  margin: 10px 20px;
+}
+
+.bangdan>.title {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.bangdan>.box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bangdan>.box>.item>span {
+  font-size: 12px;
+}
+
+.bangdan>.box>.item>div {
+  width: 105px;
+  height: 130px;
+  border-radius: 5px;
+  background-color: pink;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+
+.bangdan>.box>.item>div>span:nth-child(1) {
+  font-size: 20px;
+  color: white;
+  height: 100px;
+  text-align: center;
+  padding-top: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.bangdan>.box>.item>div>span:nth-child(2) {
+  font-size: 12px;
+  color: white;
+  padding-left: 10px;
+}
+
+.bangdan>.box>.item:nth-child(1)>div {
+  background: linear-gradient(300deg, #d57fd7, #f2244c);
+}
+
+.bangdan>.box>.item:nth-child(2)>div {
+  background: linear-gradient(300deg, #ef337c, #424f47, #d09fce);
+}
+
+.bangdan>.box>.item:nth-child(3)>div {
+  background: linear-gradient(300deg, #b92c2c, #d0d05d, #79c56d);
+}
+
+.guanfang>.title{
+    margin-bottom: 10px;
+    margin-left: 15px;
+    font-size: 15px;
+}
+.guanfang>.box>.item{
+    margin-left: 15px;
+    margin-top: 10px;
+    display: flex;
+    
+}
+.guanfang>.box>.item>.left{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    height: 120px;
+    width: 100px;
+    color: white;
+    border-radius: 10px;
+    background:linear-gradient(#729fdd,#839ee8);
+}
+.guanfang>.box>.item>.left>span:nth-child(2){
+    position:absolute;
+    bottom: 3px;
+    left: 8px;
+    font-size: 8px;
+}
+.guanfang>.box>.item>.right{
+    margin-left: 15px;
+}
+.guanfang>.box>.item>.right>div{
+    margin-top: 10px;
+    font-size: 13px;
+    color: #a09098;
+}
+#left02{
+    background:linear-gradient(#8ec9f4,#66c1cd);
+}
+#left03{
+    background:linear-gradient(#b55948,#c67f60);
+}
+#left04{
+    background:linear-gradient(#c84d89,#cb62eb);
+}

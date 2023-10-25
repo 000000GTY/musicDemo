@@ -1,0 +1,74 @@
+body{
+    background-color: #f4f0ec;
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+.quxiao{
+  font-size: 20px;
+  color: red;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+.top-nav>.fa {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.749);
+}
+.geDan{
+    /* border: 1px solid red; */
+    margin: 15px 15px 0px 15px;
+    border-radius: 20px 20px 0px 0px;
+    background-color: #f1f7ffd5;
+    height: 620px;
+}
+.geDan .item{
+    margin-top: 10px;
+}
+.song-list {
+    margin: .2667rem .5333rem 1.6rem .2667rem;
+  }
+
+  .song-list .song-item {
+    display: flex;
+    align-items: center;
+    height: 1.6rem;
+    border-bottom: .0267rem solid gainsboro;
+  }
+
+  
+
+  .song-list .song-item>span {
+    width: .5333rem;
+    text-align: center;
+    color: rgb(217, 92, 92);
+    margin-right: .2667rem;
+  }
+
+  .song-list .song-item .item-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .song-list .item-text .item-title {
+    font-size: .4267rem;
+  }
+
+  .song-list .item-text .item-singer {
+    font-size: .32rem;
+    color: rgb(153, 92, 92);
+    margin-top: .16rem;
+  }
+
+  .song-list img {
+    width: .8rem;
+    height: .8rem;
+    background-color: rgb(198, 73, 73);
+    border-radius: .4rem;
+    margin-left: auto;
+    margin-right: .2667rem;
+  }

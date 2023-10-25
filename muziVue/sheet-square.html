@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Document</title>
+  <!-- 引入vue文件 -->
+  <script src="./js/vue.js"></script>
+  <link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="./swiper/swiper-bundle.min.css">
+  <link rel="stylesheet" href="./css/sheet-square.css">
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="top-nav">
+      <i class="fa fa-arrow-left back" @click="goBack()"></i>
+      <div>歌单广场</div>
+      <i class="fa fa-plus send" @click="addSheet()"></i>
+    </div>
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="sheet of sheets">
+          <img :src="sheet.pic" @click="goToSheet(sheet.sid)" />
+          <span>{{ sheet.title }}</span>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <!--  -->
+    <div class="geDan">
+      <div class="item" v-for="sheet of sheets">
+        <img :src="sheet.pic" @click="goToSheet(sheet.sid)"/>
+        <span>{{ sheet.title }}</span>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <script src="./swiper/swiper-bundle.min.js"></script>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        sheets: []
+      },
+      mounted() {
+        fetch('http://196.168.143.181:3000/sheet/list').then(res => res.json()).then(res => {
+          this.sheets = res.data.slice(0, 9);
+          console.log(this.sheets);
+        })
+        var swiper = new Swiper(".mySwiper", {
+          autoplay: {
+            delay: 3000,//1秒切换一次
+          },
+          effect: "coverflow",
+          grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: "auto",
+          coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          },
+        });
+      },
+      methods: {
+        goBack() {
+          history.back();
+        },
+        goToSheet: function (sid) {
+          window.location.href = './sheet.html?sid=' + sid
+        },
+        addSheet:function(){
+          location.href = './add-sheet.html'
+        }
+      }
+
+    })
+  </script>
+
+</body>
+
+</html>

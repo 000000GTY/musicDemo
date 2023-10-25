@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/register.css" />
+    <script src="./js/vue.js"></script>
+    <script>
+        document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+    </script>
+</head>
+
+<body>
+    <!-- 优化注册界面 -->
+    <div id="app">
+        <div></div>
+        <div class="zhuce">
+            <h2>注册</h2>
+            <input type="text" v-model="phone" class="phone" placeholder="请输入手机号"> <br>
+            <div class="yanzhengma">
+                <input type="text" class="code" placeholder="请输入验证码" v-model="code"></input>
+                <span class="right" v-if="show" @click="getCode()">发送验证码</span>
+                <span v-else class="right">({{count}}s)</span>
+                <br>
+            </div>
+
+            <input type="text" v-model="upwd" class="upwd" placeholder="请输入密码"> <br>
+            <button @click="reg()">立即注册</button>
+            <div @click="goToLogin()" class="Login">已经有账号去登录</div>
+        </div>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                phone: '',
+                upwd: '',
+                show: true,
+                count: '',
+                // id
+                timer: null,
+                code:'',
+                resCode:'0000'
+            },
+            methods: {
+                reg() {
+                    if(this.resCode == this.code){
+                        fetch('http://196.168.143.181:3000/user/register',
+                        {
+                            method: 'POST',
+                            body: JSON.stringify({ phone: this.phone, upwd: this.upwd }),
+                            headers: { 'Content-Type': 'application/json' }
+                        }).then(res => res.json()).then(res => {
+                            console.log(res)
+                        })
+                    }else{
+                        alert("注册失败")
+                    }
+                    
+                },
+                getCode() {
+                    if (this.show && this.phone !== '') {
+                        fetch('http://196.168.143.181:3000/user/getCode?phone=' + this.phone)
+                            .then(res => res.json()).then(res => {
+                                this.resCode = res.code
+                                console.log(res.msg+res.code)
+                            })
+                    } if (this.phone == '') {
+                        alert("手机号不能为空")
+                    }else {
+                        var TIME_COUNT = 60;
+                        if (!this.timer) {
+                            this.count = TIME_COUNT;
+                            this.show = false;
+                            //setInterval返回的值是当前setInterval的id，用 clearInterval(this.timer);停止循环
+                            this.timer = setInterval(() => {
+                                if (this.count > 0 && this.count <= TIME_COUNT) {
+                                    this.count--;
+                                } else {
+                                    this.show = true;
+                                    clearInterval(this.timer);
+                                    this.timer = null;
+                                }
+                            }, 1000);
+                        }
+                    }
+                },
+                goToLogin(){
+                    location.href = './from.html'
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+      body {
+        margin: 0;
+        position: relative;
+      }
+
+      .info {
+        height: 4.5333rem;
+        background-color: gray;
+        padding-top: .8rem;
+        padding-left: .5333rem;
+        padding-right: .2667rem;
+        padding-bottom: .5333rem;
+        position: relative;
+        display: flex;
+      }
+
+      /* 
+  选择器1 选择器2{} 
+  后代选择器
+  */
+      .info .left {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .info .left img {
+        width: 3.2rem;
+        height: 3.2rem;
+      }
+
+      .info .left span {
+        position: absolute;
+        left: 0;
+        top: .2667rem;
+        background-color: #b94257;
+        color: white;
+        width: 1.0667rem;
+        height: .6933rem;
+        line-height: .6933rem;
+        /*  */
+        border-radius: 0 .3467rem .3467rem 0;
+        padding-left: .16rem;
+        font-size: .3733rem;
+      }
+
+      .info .right {
+        margin-left: .2667rem;
+      }
+
+      .info .right span {
+        color: white;
+        font-size: .48rem;
+      }
+
+      .info .right>div {
+        display: flex;
+        align-items: center;
+        margin-top: .2667rem;
+      }
+
+      .info .right img {
+        width: 1.0667rem;
+        height: 1.0667rem;
+        border-radius: .5333rem;
+        margin-right: .16rem;
+      }
+
+      .info .right div span {
+        font-size: .3733rem;
+      }
+
+      .middleRight {
+        position: relative;
+      }
+
+      .middleRight>i {
+        position: absolute;
+        bottom: 0rem;
+        right: .1867rem;
+        font-size: .4rem;
+        color: rgb(255, 255, 255);
+        background-color: rgb(226, 226, 19);
+        border-radius: .1867rem;
+      }
+
+      .author {
+        color: white;
+        font-size: .4rem;
+      }
+
+      .line {
+        background-color: gainsboro;
+        height: .16rem;
+      }
+
+      .song-list {
+        margin: .2667rem .5333rem 1.6rem .2667rem;
+      }
+
+      .song-list .song-item {
+        display: flex;
+        align-items: center;
+        height: 1.6rem;
+        border-bottom: .0267rem solid gainsboro;
+      }
+
+      
+
+      .song-list .song-item>span {
+        width: .5333rem;
+        text-align: center;
+        color: gray;
+        margin-right: .2667rem;
+      }
+
+      .song-list .song-item .item-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .song-list .item-text .item-title {
+        font-size: .4267rem;
+      }
+
+      .song-list .item-text .item-singer {
+        font-size: .32rem;
+        color: gray;
+        margin-top: .16rem;
+      }
+
+      .song-list img {
+        width: .8rem;
+        height: .8rem;
+        background-color: gray;
+        border-radius: .4rem;
+        margin-left: auto;
+        margin-right: .2667rem;
+      }
+
+
+
+      .tab-bar {
+        height: 1.6rem;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 .48rem;
+      }
+
+      .tab-bar .tab-bar-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .tab-bar .tab-bar-item i {
+        font-size: .5333rem;
+        margin-bottom: .0533rem;
+        width: .8533rem;
+        height: .8533rem;
+        border-radius: .4267rem;
+        text-align: center;
+        line-height: .8533rem;
+      }
+
+      .tab-bar .tab-bar-item span {
+        font-size: .32rem;
+      }
+
+      #back{
+        margin-top: 10px;
+        margin-left: 10px;
+        z-index: 1;
+        position: absolute;
+        font-size: 25px;
+        color: rgba(255, 228, 196, 0.869);
+      }

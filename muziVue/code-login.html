@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="./css/code-login.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  </link>
+  <script>
+    document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+  </script>
+  <!-- 引入vue文件 -->
+  <script src="./js/vue.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+
+    <div class="form">
+      <input type="text" class="uname" id="phone" v-model="phone" placeholder="请输入手机号">
+      <div class="yanzhengma">
+        <input type="text" class="code" placeholder="请输入验证码" v-model="code"></input>
+        <span class="right" v-if="show" @click="getCode()">发送验证码</span>
+        <span v-else class="right">({{count}}s)</span>
+        <br>
+      </div>
+      <button id="button01" class="login" @click="login()">登录</button>
+      <button class="login" @click="goToLogin()">账号登录</button>
+    </div>
+    <!-- 手机号: <input type="text" v-model="phone"> <br>
+    <button @click="getCode">获取验证码</button> <br>
+    验证码: <input type="text" v-model="code"> <br>
+    <button @click="login">登录</button> -->
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        phone: '',
+        code: '',
+        show: true,
+        count: '',
+        // id
+        timer: null,
+        code: '',
+        resCode: '0000'
+      },
+      methods: {
+        getCode() {
+          if (this.show && this.phone !== '') {
+            fetch('http://196.168.143.181:3000/user/getCode?phone=' + this.phone)
+              .then(res => res.json()).then(res => {
+                this.resCode = res.code
+                console.log(res.msg + res.code)
+              })
+          } if (this.phone == '') {
+            alert("手机号不能为空")
+          } else {
+            var TIME_COUNT = 60;
+            if (!this.timer) {
+              this.count = TIME_COUNT;
+              this.show = false;
+              //setInterval返回的值是当前setInterval的id，用 clearInterval(this.timer);停止循环
+              this.timer = setInterval(() => {
+                if (this.count > 0 && this.count <= TIME_COUNT) {
+                  this.count--;
+                } else {
+                  this.show = true;
+                  clearInterval(this.timer);
+                  this.timer = null;
+                }
+              }, 1000);
+            }
+          }
+        },
+        login() {
+          fetch('http://196.168.143.181:3000/user/codeLogin?phone=' + this.phone + '&code=' + this.code)
+            .then(res => res.json()).then(res => {
+              console.log(res)
+            })
+        },
+        goToLogin(){
+          location.href = "./from.html";
+          
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

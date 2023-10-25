@@ -1,0 +1,85 @@
+body{
+    background-color: #f4f0ec;
+}
+.zhuce{
+    position: fixed;
+    height: 500px;
+    width: 100%;
+    bottom: 0px;
+    border-radius: 40px 40px 0px 0px;
+    background-color: white;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+h2{
+    font-size: 30px;
+    padding: 10px;
+}
+.zhuce input{
+    width: 330px;
+    /* 取消点击高亮 */
+    outline: none;
+    /* 设置内边距，字体与开头的距离 */
+    padding-left: 35px;
+    border-radius: 5px;
+    background-color: #faf8f6;
+    margin-top: 10px;
+    height: 40px;
+    border: none;
+}
+.phone {
+    background-image: url("../img/user4.png");
+    background-size: 25px 25px;
+    /* 控制背景图片重复 */
+    background-repeat: no-repeat;
+    /* 控制背景图片位置 */
+    background-position: 5px center;
+}
+.zhuce>button{
+    background-color: #ec7b67;
+    width: 330px;
+    margin-top: 10px;
+    height: 40px;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+}
+.yanzhengma{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.yanzhengma>.right{
+    margin-top: 10px;
+    position: absolute;
+    color: #ec7b67;
+    right: 30px;
+    font-size: 13px;
+    font-weight: 900;
+}
+.yanzhengma .code{
+    background-image: url("../img/user4.png");
+    background-size: 25px 25px;
+    /* 控制背景图片重复 */
+    background-repeat: no-repeat;
+    /* 控制背景图片位置 */
+    background-position: 5px center;
+   
+}
+.upwd{
+    background-image: url("../img/user4.png");
+    background-size: 25px 25px;
+    /* 控制背景图片重复 */
+    background-repeat: no-repeat;
+    /* 控制背景图片位置 */
+    background-position: 5px center;
+  
+}
+.Login{
+    width: 100%;
+    margin: 10px;
+    padding-left: 100px;
+    color: #ec7b67;
+    font-size: 15px;
+}

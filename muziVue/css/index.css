@@ -1,0 +1,47 @@
+body {
+    background-color: #da2c22;
+}
+
+h1,
+h4 {
+    font-size: .4rem;
+    color: white;
+    text-align: center;
+    font-weight: 400;
+}
+
+h1 {
+    position: fixed;
+    top: 2.6667rem;
+    left: 0;
+    right: 0;
+    font-size: .4rem;
+    font-size: 1.28rem;
+    /* border: .0267rem solid white; */
+
+}
+
+h4 {
+    font-size: .4rem;
+    /* margin-top: 9.3333rem; */
+    /* 元素设置为弹性盒子 */
+    display: flex;
+    /* 让所有子元素水平居中 */
+    /* 官方解释：将伸缩项沿伸缩容器当前行的主轴对齐。 */
+    justify-content: center;
+    /* 让所有子元素垂直居中 */
+    /* 官方解释：将伸缩项沿伸缩容器当前线条的十字轴对齐 */
+    align-items: center;
+    /* 固定定位 */
+    position: fixed;
+    bottom: .2667rem;
+    left: 0;
+    right: 0;
+}
+
+img {
+    width: .5333rem;
+    height: .5333rem;
+    margin-right: .2667rem;
+
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/collect.css">
+  <script>
+    document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+  </script>
+  <!-- 引入vue文件 -->
+  <script src="./js/vue.js"></script>
+  <title></title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="top-nav">
+      <i class="fa fa-arrow-left back" @click="goBack()"></i>
+      <div>我喜欢的音乐</div>
+      <i class="fa fa-plus send" @click="goToAddSheet()"></i>
+    </div>
+
+    <div class="geDan">
+      <div class="song-list">
+
+        <div class="song-item" v-for="(item,i) of collect">
+          <span>{{ i+1 }}</span>
+          <div class="item-text">
+            <span class="item-title">{{ item.title }}</span>
+            <span class="item-singer">{{ item.singer }}</span>
+          </div>
+
+          <img src="./img/_play.png" alt="" @click="goToSong(item.sid)">
+          <i class="fa fa-close quxiao" @click="rmCollect(item.sid)"></i>
+        </div>
+      </div>
+    </div>
+    <!-- </div>
+      <div v-for="(item,i) of collect" class="item">
+        {{ i+1 }} => {{ item.title }} <button @click="rmCollect(item.sid)">取消收藏</button>
+      </div>
+    </div> -->
+
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        collect: ''
+      },
+      methods: {
+        rmCollect: function (sid) {
+          var uid = localStorage.getItem('uid')
+          fetch('http://196.168.143.181:3000/collect/remove?uid=' + uid + '&sid=' + sid)
+            .then(res => res.json()).then(res => {
+              console.log(res)
+              // 刷新页面
+              location.reload()
+            })
+        },
+        goBack: function () {
+          history.back()
+        },
+        goToSong: function (sid) {
+          location.href = './song-info.html?sid=' + sid
+        },
+        goToAddSheet:function(){
+          location.href = './add-sheet.html'
+        }
+
+      },
+      mounted() {
+        var uid = localStorage.getItem('uid')
+        fetch('http://196.168.143.181:3000/collect/list?uid=' + uid).then(res => res.json()).then(res => {
+          console.log(res)
+          this.collect = res.data
+        })
+      },
+    })
+  </script>
+</body>
+
+</html>

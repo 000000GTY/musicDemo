@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/user.css" />
+  <script>
+    // 获取uid
+    var uid = localStorage.getItem("uid");
+    console.log(uid)
+    // 登录条件判断 
+    // null 在if判断中为false
+    // !取反   !false = true
+    if (!uid) {
+      location.href = "./from.html";
+    }
+  </script>
+  <script>
+    document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+  </script>
+  <script src="./js/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="info">
+      <img class="avatar" :src="user.avatar" alt="">
+      <span class="uname">{{ user.uname }}</span>
+    </div>
+    <h2>用户操作</h2>
+    <div class="two">
+      <div class="item" @click="goToUserUpdate()">
+        <i class="fa fa-address-card left"></i>
+        <div>账号信息修改</div>
+        <i class="fa fa-arrow-right right"></i>
+      </div>
+      <div class="item" @click="goCollect()">
+        <i class="fa fa-address-card left"></i>
+        <div>我喜欢的歌单</div>
+        <i class="fa fa-arrow-right right" ></i>
+      </div>
+      <div class="item" @click="goToUserSheet()">
+        <i class="fa fa-address-card left"></i>
+        <div>我创建的歌单</div>
+        <i class="fa fa-arrow-right right" ></i>
+      </div>
+      <div class="item" @click="addSheet()">
+        <i class="fa fa-address-card left"></i>
+        <div>创建新歌单</div>
+        <i class="fa fa-arrow-right right" ></i>
+      </div>
+    </div>
+    <div class="login" @click="out()">退 出 登 录</div>
+    <div class="tab-bar">
+      <div class="tab-bar-item" @click="goToFind()">
+        <i class="fa fa-meetup"></i>
+        <span>发现</span>
+      </div>
+      <div class="tab-bar-item">
+        <i class="fa fa-credit-card"></i>
+        <span>视频</span>
+      </div>
+      <div class="tab-bar-item" @click="goToUser2()">
+        <i class="fa fa-paper-plane-o"></i>
+        <span>我的</span>
+      </div>
+      <div class="tab-bar-item" @click="goToOrder()">
+        <i class="fa fa-id-card-o"></i>
+        <span>排行榜</span>
+      </div>
+      <div class="tab-bar-item active">
+        <i class="fa fa-user-o"></i>
+        <span>账号</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        user: {}
+      },
+      mounted() {
+        fetch('http://196.168.143.181:3000/user/info?uid=' + uid)
+          .then(res => res.json())
+          .then(res => {
+            console.log(res)
+            this.user = res.data
+          })
+      },
+      methods: {
+        goToFind: function () {
+          window.location.href = "find.html";
+        },
+        out: function () {
+          // 清除uid
+          localStorage.removeItem("uid");
+          location.href = "./from.html";
+        },
+        goToUser2: function () {
+          location.href = './user2.html'
+        },
+        goToUserUpdate:function(){
+          location.href = './user-update.html'
+        },
+        goToOrder:function(){
+          location.href = './order.html'
+        },
+        goCollect:function(){
+          location.href = './collect.html'
+        },
+        addSheet:function(){
+          location.href = './add-sheet.html'
+        },
+        goToUserSheet:function(){
+          location.href = './user-sheet.html'
+        }
+      },
+    })
+  </script>
+  <!-- <script>
+    var users = [
+      {
+        "uid": 1,
+        "phone": "123",
+        "upwd": "123",
+        "avatar": "img/img/user/101.jpg"
+      },
+      {
+        "uid": 2,
+        "phone": "13501234568",
+        "upwd": "123456",
+        "avatar": "img/img/user/102.jpg"
+      },
+      {
+        "uid": 3,
+        "phone": "13501234569",
+        "upwd": "123456",
+        "avatar": "img/img/user/103.jpg"
+      },
+      {
+        "uid": 4,
+        "phone": "13501234560",
+        "upwd": "123456",
+        "avatar": "img/img/user/104.jpg"
+      }
+    ]
+    var goToFind = function () {
+      window.location.href = "find.html";
+    }
+
+    var out = function () {
+      // 清除uid
+      localStorage.removeItem("uid");
+      location.href = "./from.html";
+    }
+    var goToUser2 = function () {
+      location.href = './user2.html'
+    }
+
+
+    var imgEl = document.querySelector('.avatar')
+    var uname = document.querySelector('.uname')
+    for (var user of users) {
+      if (user.uid == uid) {
+        imgEl.src = user.avatar
+        uname.textContent = user.phone
+      }
+    }
+  </script> -->
+</body>
+
+</html>

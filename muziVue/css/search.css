@@ -1,0 +1,129 @@
+span{
+    font-size: .3733rem;
+}
+.iEl{
+    font-size: .4rem;
+}
+.title{
+    font-size: .4rem;
+}
+.nav-bar {
+    width: 100%;
+    margin-top: 1.0667rem;
+    display: flex;
+    justify-content: space-evenly;
+    position: fixed;
+    top: .2667rem;
+    z-index: 999;
+    background-color: white;
+}
+
+.nav-bar>span {
+    width: 1.3333rem;
+    text-align: center;
+    line-height: .6933rem;
+}
+
+.nav-bar>.active {
+    border-bottom: .0533rem solid #ff2721;
+    color: #ff2721;
+}
+
+.box {
+    margin-left: .2667rem;
+    margin-right: .2667rem;
+    margin-top: 2.4rem;
+
+}
+
+.box>.item {
+    display: flex;
+    align-items: center;
+    margin-bottom: .5333rem;
+}
+
+
+.box>.item>.info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.box>.item>.info>.title {
+    margin-bottom: .2133rem;
+}
+
+.box>.item>.info>.ps {
+    display: flex;
+    align-items: center;
+}
+
+.box>.item>.info>.ps>span:nth-child(1) {
+    color: #ff2721;
+    width: 1.0667rem;
+    height: .48rem;
+    border: .0267rem solid #ff2721;
+    border-radius: .16rem;
+    font-size: .32rem;
+    line-height: .48rem;
+    text-align: center;
+    margin-right: .16rem;
+}
+
+.box>.item>.info>.ps>span:nth-child(2) {
+    font-size: .32rem;
+}
+
+.box>.item>img{
+    width: .8rem;
+    height: .8rem;
+    margin-right: .2667rem;
+}
+.box>.item>.right{
+    width: .5333rem;
+    height: .5333rem;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding-top: .2667rem;
+    padding-bottom: .2667rem;
+    background-color: white;
+    z-index: 999;
+    width: 100%;
+}
+
+.search>input {
+    width: 80%;
+    height: .8rem;
+    border: none;
+    background-color: rgba(210, 203, 194, 0.248);
+    border-radius: .8rem;
+
+    outline: 0;
+    background-image: url('../img/search.png');
+    background-size: .5333rem;
+    background-repeat: no-repeat;
+    background-position: .8rem;
+    padding-left: 1.6rem;
+}
+
+.search>img {
+    width: .5333rem;
+    height: .5333rem;
+    border: .08rem solid gray;
+    border-radius: .48rem;
+    padding: .08rem;
+    margin-left: .2133rem;
+    margin-right: .2133rem;
+}
+.search i{
+    margin-right: .2133rem;
+    margin-left: .2133rem;
+}

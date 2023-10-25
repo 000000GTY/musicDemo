@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="./font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.css">
+	<link rel="stylesheet" href="./css/song-info.css">
+	<script>
+		document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+	</script>
+	<script src="./js/vue.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<div class="top-nav">
+			<i class="fa fa-arrow-left back" @click="goBack()"></i>
+			<i class="fa fa-star-o send" @click="addCollect()"></i>
+		</div>
+		<div class="info">
+			<h2>{{song.title}}</h2>
+			<h3>{{song.singer}}</h3>
+		</div>
+		<img class="cover" :src="song.cover" alt="">
+		<div class="audio">
+			<audio :src="song.url" controls></audio>
+		</div>
+	</div>
+
+	<script>
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				song: {}
+			},
+			mounted() {
+				var url = location.search
+				url = url.slice(1)
+				console.log(url.split('='))
+				var sid = url.split('=')[1]
+				// 根据sid获取歌曲信息
+				fetch('http://196.168.143.181:3000/song/info?sid=' + sid)
+					.then(res => res.json())
+					.then(res => {
+						console.log(res)
+						this.song = res.data
+					})
+			},
+			methods: {
+				goBack: function () {
+					history.back()
+				},
+				addCollect() {
+					var uid = localStorage.getItem('uid')
+					fetch('http://196.168.143.181:3000/collect/add?uid=' + uid + '&sid=' + this.song.sid)
+						.then(res => res.json()).then(res => {
+							console.log(res)
+						})
+				}
+			},
+			created() {
+				
+			},
+			
+		})
+	</script>
+	<!-- <script>
+
+
+		let songs = [
+			{
+				"sid": 1,
+				"title": "TBD",
+				"singer": "David",
+				"cover": "img/img/song/615.jpg",
+				"url": "audio/615.mp3"
+			},
+			{
+				"sid": 2,
+				"title": "出头天",
+				"singer": "五月天",
+				"cover": "img/img/song/618.jpg",
+				"url": "audio/618.mp3"
+			},
+			{
+				"sid": 3,
+				"title": "刚刚好",
+				"singer": "薛之谦",
+				"cover": "img/img/song/781.jpg",
+				"url": "audio/781.mp3"
+			},
+			{
+				"sid": 4,
+				"title": "你不是真正的快乐",
+				"singer": "邓紫棋",
+				"cover": "img/img/song/796.jpg",
+				"url": "audio/796.mp3"
+			},
+			{
+				"sid": 5,
+				"title": "绅士",
+				"singer": "薛之谦",
+				"cover": "img/img/song/801.jpg",
+				"url": "audio/801.mp3"
+			},
+			{
+				"sid": 6,
+				"title": "天外来物",
+				"singer": "薛之谦",
+				"cover": "img/img/song/805.jpg",
+				"url": "audio/805.mp3"
+			},
+			{
+				"sid": 7,
+				"title": "突然好想你",
+				"singer": "五月天",
+				"cover": "img/img/song/809.jpg",
+				"url": "audio/809.mp3"
+			},
+			{
+				"sid": 8,
+				"title": "我不愿让你一个人",
+				"singer": "五月天",
+				"cover": "img/img/song/813.jpg",
+				"url": "audio/813.mp3"
+			},
+			{
+				"sid": 9,
+				"title": "我心中的尚未崩坏的地方",
+				"singer": "五月天",
+				"cover": "img/img/song/821.jpg",
+				"url": "audio/821.mp3"
+			},
+			{
+				"sid": 10,
+				"title": "想见你想见你想见你",
+				"singer": "八三夭",
+				"cover": "img/img/song/900.jpg",
+				"url": "audio/900.mp3"
+			},
+			{
+				"sid": 11,
+				"title": "像风一样",
+				"singer": "薛之谦",
+				"cover": "img/img/song/903.jpg",
+				"url": "audio/903.mp3"
+			},
+			{
+				"sid": 12,
+				"title": "这就是爱",
+				"singer": "张杰",
+				"cover": "img/img/song/905.jpg",
+				"url": "audio/905.mp3"
+			}
+		]
+
+		// 获取到地址栏中的参数 ?sid=1
+		var url = location.search
+		// slice() 去掉字符串前面的问号 sid=1
+		url = url.slice(1)
+		var sid = url.split('=')[1]
+
+		// 根据sid获取歌曲信息
+		var song = songs.find(function (item) {
+			return item.sid == sid
+		})
+
+
+		var coverImg = document.querySelector('.cover')
+		coverImg.src = song.cover
+		var audioEl = document.querySelector('audio')
+		audioEl.src = song.url
+		var infoH2 = document.querySelector('.info h2')
+		infoH2.textContent = song.title
+		var infoH3 = document.querySelector('.info h3')
+		infoH3.textContent = song.singer
+
+		var goToFind = function () {
+			// history.go(-1)
+			history.back()
+		}
+
+	</script> -->
+</body>
+
+</html>

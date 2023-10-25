@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/from.css">
+    <script>
+        document.documentElement.style.fontSize = window.screen.width / 10 + 'px'
+    </script>
+    <script src="./js/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h2>
+            <img src="./img/logo.png" alt="" class="logo"/>
+            <div class="h2Text">木子音乐</div>
+        </h2>
+        <div class="form">
+            <input type="text" class="uname" id="uname" v-model="phone">
+            <input type="password" class="upwd" id="upwd"  v-model="upwd">
+            <button id="button01" class="login" @click="login()">登录</button>
+            <button class="login" @click="goToFind()">游客游览</button>
+            <button class="login" @click="goToCodeLogin()">手机号登录</button>
+            <button class="login" @click="goToRegister()">用户注册</button>
+        </div>
+        <div class="agreement">
+            <div class="left">
+                <input type="checkbox" id="checkboxEl" />同意
+            </div>
+            <div class="right">
+                <!-- &nbsp;空格 -->
+                <span>《服务条款》</span>
+                <span>《隐私政策》</span>
+                <span>《大学生隐私》</span>
+                <span>《认证》</span>
+                <span>《条款》</span>
+            </div>
+        </div>
+
+        <div class="icon">
+            <i class="qq"></i>
+            <i class="weixin"></i>
+            <i class="weibo"></i>
+            <i class="apple"></i>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                phone: '',
+                upwd: '',
+
+            },
+            methods: {
+                login: function () {
+					var user = {
+						phone: this.phone,
+						upwd: this.upwd
+					}
+					fetch('http://196.168.143.181:3000/user/login',
+						{
+							method: 'POST',
+							body: JSON.stringify(user),
+							headers: { 'Content-Type': 'application/json' }
+						}
+					).then(res => res.json())
+						.then(res => {
+							console.log(res)
+							if (res.code == 200) {
+                                // 保存登录信息
+                                localStorage.setItem('uid', res.uid)
+								location.href = "user.html"
+                                
+
+								
+							} else {
+								this.msg = res.msg
+							}
+						})
+				},
+                goToFind: function () {
+                    location.href = "./find.html";
+                },
+                goToCodeLogin(){
+                    location.href = "./code-login.html";
+                },
+                goToRegister(){
+                    location.href = "./register.html";
+                }
+            },
+        })
+
+    </script>
+
+    <!-- <script>
+        var users = [
+            {
+                "uid": 1,
+                "phone": "123",
+                "upwd": "123",
+                "avatar": "img/user/101.jpg"
+            },
+            {
+                "uid": 2,
+                "phone": "13501234568",
+                "upwd": "123456",
+                "avatar": "img/user/102.jpg"
+            },
+            {
+                "uid": 3,
+                "phone": "13501234569",
+                "upwd": "123456",
+                "avatar": "img/user/103.jpg"
+            },
+            {
+                "uid": 4,
+                "phone": "13501234560",
+                "upwd": "12345",
+                "avatar": "img/user/104.jpg"
+            }
+        ]
+        var login = function () {
+            var uname = document.querySelector("#uname");
+            var upwd = document.querySelector("#upwd");
+            var tishi = document.querySelector('.tishi')
+            var user = users.find(function (item) {
+                return item.phone == uname.value && item.upwd == upwd.value;
+            })
+            console.log(user)
+            // undefined 在if判断之中会自动转为false
+            if (user) {
+                location.href = "./user.html"
+                // 保存登录信息
+                localStorage.setItem('uid', user.uid)
+            }else{
+                
+                tishi.textContent = '用户名或密码错误'
+            }
+        }
+
+        var goToFind = function () {
+            var checkboxEl = document.getElementById('checkboxEl')
+            console.log(checkboxEl.value)
+            window.location.href = "find.html";
+        }
+        
+    </script> -->
+</body>
+
+</html>
